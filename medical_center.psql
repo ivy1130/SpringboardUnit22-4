@@ -1,0 +1,47 @@
+DROP DATABASE IF EXISTS medical_center;
+
+CREATE DATABASE medical_center;
+
+\c medical_center;
+
+CREATE TABLE doctors
+(
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL,
+  start_date DATE
+);
+
+CREATE TABLE patients
+(
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL
+);
+
+CREATE TABLE diseases
+(
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL
+);
+
+CREATE TABLE doctors_diseases
+(
+  id SERIAL PRIMARY KEY,
+  doctor INTEGER REFERENCES doctors ON DELETE CASCADE,
+  specialty INTEGER REFERENCES diseases ON DELETE CASCADE
+);
+
+CREATE TABLE doctors_patients
+(
+  id SERIAL PRIMARY KEY,
+  doctor INTEGER REFERENCES doctors ON DELETE SET NULL,
+  patient INTEGER REFERENCES patients ON DELETE SET NULL,
+  check_up_date DATE
+);
+
+CREATE TABLE patients_diseases
+(
+  id SERIAL PRIMARY KEY,
+  patient INTEGER REFERENCES patients ON DELETE CASCADE,
+  disease INTEGER REFERENCES diseases ON DELETE CASCADE
+);
+
